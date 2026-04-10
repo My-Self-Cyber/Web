@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <title>RentalX | Car Rental Service</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="nav__header">
+          <div class="nav__logo">
+            <a href="index.html">RentalX</a>
+          </div>
+          <div class="nav__menu__btn" id="menu-btn">
+            <i class="ri-menu-line"></i>
+          </div>
+        </div>
+        
+        <ul class="nav__links" id="nav-links">
+          <li><a href="index.html#home">Home</a></li>
+          <li><a href="rent.html">Rent</a></li>
+          <li><a href="cars.html">Cars</a></li>
+          <li><a href="index.html#ride">Ride</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+          
+          <!-- User Status -->
+          <li class="nav__user" id="nav-user">
+            <span id="user-greeting"></span>
+            <button class="btn btn__secondary" id="logout-btn">Logout</button>
+          </li>
+        </ul>
+        
+        <!-- Sign Up / Sign In Links -->
+        <div class="nav__btns" id="auth-buttons">
+          <a href="signup.html" class="btn btn__primary">Sign Up</a>
+          <a href="signin.html" class="btn btn__secondary">Sign In</a>
+          <button class="btn btn__secondary" id="logout-btn-visible">Logout</button>
+        </div>
+      </nav>
+      
+      <div class="section__container header__container" id="home">
+        <div class="header__image">
+          <img src="assets/header.png" alt="header" />
+        </div>
+        <div class="header__content">
+          <h1>Looking to save more on your rental car?</h1>
+          <p>
+            Discover RentalX car rental options in Pakistan with Rent a Car. Select
+            from a range of car options and local specials.
+          </p>
+          <div class="header__links">
+            <a href="#">
+              <img src="assets/store.jpg" alt="app store" />
+            </a>
+            <a href="#">
+              <img src="assets/play.png" alt="play" />
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="section__container steps__container" id="rent">
+      <p class="section__subheader">HOW IT WORKS</p>
+      <h2 class="section__header">RentalX following 3 working steps</h2>
+      <div class="steps__grid">
+        <div class="steps__card">
+          <span><i class="ri-map-pin-fill"></i></span>
+          <h4>Choose a location</h4>
+          <p>
+            Select your desired rental location from our extensive network of
+            car rental spots.
+          </p>
+        </div>
+        <div class="steps__card">
+          <span><i class="ri-calendar-check-fill"></i></span>
+          <h4>Pick-up date</h4>
+          <p>
+            Specify the date and time you wish to pick up your car with flexible
+            scheduling options.
+          </p>
+        </div>
+        <div class="steps__card">
+          <span><i class="ri-bookmark-3-fill"></i></span>
+          <h4>Book your car</h4>
+          <p>
+            Browse through our wide range of vehicles and choose the one that
+            best suits your needs.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section__container experience__container" id="ride">
+      <p class="section__subheader">CUSTOMER EXPERIENCE</p>
+      <h2 class="section__header">
+        We are ensuring the best customer experience
+      </h2>
+      <div class="experience__content">
+        <div class="experience__card">
+          <span><i class="ri-price-tag-3-fill"></i></span>
+          <h4>Competitive pricing</h4>
+        </div>
+        <div class="experience__card">
+          <span><i class="ri-money-rupee-circle-fill"></i></span>
+          <h4>Easier Rent On Your Budget</h4>
+        </div>
+        <div class="experience__card">
+          <span><i class="ri-bank-card-fill"></i></span>
+          <h4>Most Flexible Payment Plans</h4>
+        </div>
+        <div class="experience__card">
+          <span><i class="ri-award-fill"></i></span>
+          <h4>The Best Extended Auto Warranties</h4>
+        </div>
+        <div class="experience__card">
+          <span><i class="ri-customer-service-2-fill"></i></span>
+          <h4>Roadside Assistance 24/7</h4>
+        </div>
+        <div class="experience__card">
+          <span><i class="ri-car-fill"></i></span>
+          <h4>Your Choice Of Mechanic</h4>
+        </div>
+        <img src="assets/experience.png" alt="experience" />
+      </div>
+    </section>
+
+    <section class="section__container download__container" id="contact">
+      <div class="download__grid">
+        <div class="download__content">
+          <h2 class="section__header">Download the free RentalX app</h2>
+          <p>
+            Download the RentalX app to manage your bookings, find exclusive
+            deals, and access 24/7 support, all from your mobile device.
+          </p>
+          <div class="download__links">
+            <a href="#">
+              <img src="assets/store.jpg" alt="app store" />
+            </a>
+            <a href="#">
+              <img src="assets/play.png" alt="play" />
+            </a>
+          </div>
+        </div>
+        <div class="download__image">
+          <img src="assets/download.png" alt="download" />
+        </div>
+      </div>
+    </section>
+    
+    <section class="section__container cars__container" id="cars">
+      <p class="section__subheader">CARS</p>
+      <h2 class="section__header">Explore Our Top Cars</h2>
+      <div class="cars__grid">
+        <div class="car__card" data-id="1" data-rate="2200" data-transmission="Automatic" data-fuel="Petrol" data-seats="5">
+          <img src="assets/corolla.jpg" alt="Corolla" />
+          <h4>Toyota Corolla</h4>
+          <p>Reliable sedan with great comfort and fuel efficiency.</p>
+          <button class="btn btn__primary rent-now-btn">Rent Now</button>
+        </div>
+        <div class="car__card" data-id="2" data-rate="2500" data-transmission="Automatic" data-fuel="Petrol" data-seats="5">
+          <img src="assets/civic.jpg" alt="Civic" />
+          <h4>Honda Civic</h4>
+          <p>Sporty performance with a sleek and premium design.</p>
+          <button class="btn btn__primary rent-now-btn">Rent Now</button>
+        </div>
+        <div class="car__card" data-id="3" data-rate="1800" data-transmission="Manual" data-fuel="Petrol" data-seats="5">
+          <img src="assets/hyundai.jpg" alt="Hyundai i20" />
+          <h4>Hyundai i20</h4>
+          <p>Compact hatchback, perfect for city rides and easy handling.</p>
+          <button class="btn btn__primary rent-now-btn">Rent Now</button>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="section__container footer__container">
+        <div class="footer__col footer__contact">
+          <h4>Contact Us</h4>
+          <div class="contact__info">
+            <div class="contact__item">
+              <i class="ri-phone-fill"></i>
+              <div>
+                <h5>Phone</h5>
+                <p>+92 300 1234567</p>
+                <p>+92 321 9876543</p>
+              </div>
+            </div>
+            <div class="contact__item">
+              <i class="ri-mail-fill"></i>
+              <div>
+                <h5>Email</h5>
+                <p>info@rentalx.com</p>
+                <p>support@rentalx.com</p>
+              </div>
+            </div>
+            <div class="contact__item">
+              <i class="ri-map-pin-fill"></i>
+              <div>
+                <h5>Address</h5>
+                <p>123 Main Street, Gulberg</p>
+                <p>Lahore, Pakistan 54000</p>
+              </div>
+            </div>
+            <div class="contact__item">
+              <i class="ri-time-fill"></i>
+              <div>
+                <h5>Business Hours</h5>
+                <p>Mon - Sun: 24/7</p>
+                <p>Customer Support: 24/7</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="footer__col footer__quick-links">
+          <h4>Quick Links</h4>
+          <ul class="footer__links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="rent.html">Rent a Car</a></li>
+            <li><a href="cars.html">Our Cars</a></li>
+            <li><a href="signup.html">Create Account</a></li>
+            <li><a href="signin.html">Customer Login</a></li>
+            <li><a href="#contact">Support</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="section__container footer__bar">
+        <h4>RentalX</h4>
+        <p>Copyright © 2025 RentalX. All rights reserved.</p>
+        <ul class="footer__socials">
+          <li>
+            <a href="#"><i class="ri-facebook-fill"></i></a>
+          </li>
+          <li>
+            <a href="#"><i class="ri-twitter-fill"></i></a>
+          </li>
+          <li>
+            <a href="#"><i class="ri-instagram-fill"></i></a>
+          </li>
+          <li>
+            <a href="#"><i class="ri-whatsapp-fill"></i></a>
+          </li>
+        </ul>
+      </div>
+    </footer>
+
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="auth.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Sign In - RentalX</title>
+</head>
+<body>
+    <!-- ========== NAVBAR ========== -->
+    <header>
+        <nav>
+            <div class="nav__header">
+                <div class="nav__logo">
+                    <a href="index.html">RentalX</a>
+                </div>
+                <div class="nav__menu__btn" id="menu-btn">
+                    <i class="ri-menu-line"></i>
+                </div>
+            </div>
+
+<ul class="nav__links" id="nav-links">
+    <li><a href="index.html#home">Home</a></li>
+    <li><a href="rent.html">Rent</a></li>
+    <li><a href="cars.html">Cars</a></li>
+    <li><a href="index.html#ride">Ride</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+    
+    <!-- User Status -->
+    <li class="nav__user" id="nav-user" style="display: none;">
+        <span id="user-greeting"></span>
+        <button class="btn btn__secondary" id="logout-btn">Logout</button>
+    </li>
+</ul>
+
+<!-- Sign Up / Sign In buttons -->
+<div class="nav__btns" id="auth-buttons">
+    <a href="signup.html" class="btn btn__primary">Sign Up</a>
+    <a href="signin.html" class="btn btn__secondary">Sign In</a>
+    <button class="btn btn__secondary" id="logout-btn-visible">Logout</button>
+</div>
+        </nav>
+    </header>
+
+    <!-- ========== SIGN IN FORM ========== -->
+    <section class="section__container auth__container">
+        <div class="auth__card">
+            <div class="auth__header">
+                <h2 class="section__header">Welcome Back</h2>
+                <p class="section__subheader">Sign in to your RentalX account</p>
+            </div>
+
+            <form class="auth__form" id="signin-form">
+                <div class="form__group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form__group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+
+                <button type="submit" class="btn btn__primary auth__btn">Sign In</button>
+            </form>
+
+            <div class="auth__footer">
+                <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+            </div>
+        </div>
+    </section>
+    <script src="auth.js"></script>
+    <script src="main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <title>RentalX | Cars</title>
+  </head>
+  <body>
+    <!-- ✅ Navbar (same as Home) -->
+    <header>
+      <nav>
+        <div class="nav__header">
+          <div class="nav__logo">
+            <a href="index.html">RentalX</a>
+          </div>
+          <div class="nav__menu__btn" id="menu-btn">
+            <i class="ri-menu-line"></i>
+          </div>
+        </div>
+        <ul class="nav__links" id="nav-links">
+          <li><a href="index.html#home">Home</a></li>
+          <li><a href="rent.html">Rent</a></li>
+          <li><a href="cars.html" class="active">Cars</a></li>
+          <li><a href="index.html#ride">Ride</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+          
+          <!-- User Status -->
+          <li class="nav__user" id="nav-user">
+            <span id="user-greeting"></span>
+            <button class="btn btn__secondary" id="logout-btn">Logout</button>
+          </li>
+        </ul>
+        <!-- Sign Up / Sign In buttons -->
+        <div class="nav__btns" id="auth-buttons">
+          <a href="signup.html" class="btn btn__primary">Sign Up</a>
+          <a href="signin.html" class="btn btn__secondary">Sign In</a>          <button class="btn btn__secondary" id="logout-btn-visible">Logout</button>        </div>
+      </nav>
+    </header>
+
+    <!-- ✅ Cars Section -->
+    <section class="section__container cars__container">
+      <p class="section__subheader">AVAILABLE CARS</p>
+      <h2 class="section__header">Choose Your Perfect Ride</h2>
+
+      <div class="cars__grid" id="cars-grid">
+        <!-- Cars will be loaded dynamically from the API -->
+      </div>
+    </section>
+
+    <!-- ✅ Footer (same as home) -->
+    <footer>
+      <div class="section__container footer__bar">
+        <h4>RentalX</h4>
+        <p>Copyright © 2024 Web Design Mastery. All rights reserved.</p>
+        <ul class="footer__socials">
+          <li><a href="#"><i class="ri-facebook-fill"></i></a></li>
+          <li><a href="#"><i class="ri-twitter-fill"></i></a></li>
+          <li><a href="#"><i class="ri-google-fill"></i></a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="auth.js"></script>
+    <script src="main.js"></script>
+
+  </body>
+</html>
