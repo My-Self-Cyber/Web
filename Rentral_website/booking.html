@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>Book a Car | RentalX</title>
+</head>
+<body>
+    <nav>
+        <div class="nav__logo"><a href="index.html">RentalX</a></div>
+        <ul class="nav__links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="cars.html">Cars</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><button onclick="logout()" class="btn btn-secondary">Logout</button></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1 style="margin-bottom: 2rem;">Complete Your Booking</h1>
+        
+        <div style="display: grid; grid-template-columns: 1fr 380px; gap: 2rem;">
+            <!-- Left Side - Booking Form -->
+            <div class="dashboard__content">
+                <!-- Car Summary -->
+                <div id="carSummary" style="display: flex; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-dim);">
+                    <!-- Dynamic content -->
+                </div>
+                
+                <form id="bookingForm">
+                    <!-- Date Selection -->
+                    <h3><i class="ri-calendar-line"></i> Select Dates</h3>
+                    <div class="date-picker">
+                        <div class="form__group">
+                            <label>Pickup Date</label>
+                            <input type="date" id="pickupDate" required>
+                        </div>
+                        <div class="form__group">
+                            <label>Return Date</label>
+                            <input type="date" id="returnDate" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Driver Option -->
+                    <div class="driver-option">
+                        <div>
+                            <i class="ri-taxi-line" style="color: var(--accent);"></i>
+                            <span style="margin-left: 0.5rem;">With Driver</span>
+                            <small style="display: block; color: var(--text-gray);">Professional driver included (+Rs. 2,000/day)</small>
+                        </div>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span>Yes</span>
+                            <input type="checkbox" id="withDriver">
+                        </label>
+                    </div>
+                    
+                    <!-- Promo Code -->
+                    <h3><i class="ri-discount-line"></i> Promo Code</h3>
+                    <div class="promo-section">
+                        <input type="text" id="promoCode" placeholder="Enter promo code (WELCOME500, SAVE10, RENTALX20)">
+                        <button type="button" id="applyPromoBtn" class="btn btn-secondary">Apply</button>
+                    </div>
+                    <div id="promoMessage" style="margin-top: 0.5rem;"></div>
+                    
+                    <!-- Payment Methods -->
+                    <h3><i class="ri-bank-card-line"></i> Payment Method</h3>
+                    <div class="payment-methods">
+                        <div class="payment-option" data-method="cash">
+                            <i class="ri-cash-line"></i>
+                            <span>Cash</span>
+                        </div>
+                        <div class="payment-option" data-method="card">
+                            <i class="ri-bank-card-line"></i>
+                            <span>Credit Card</span>
+                        </div>
+                        <div class="payment-option" data-method="jazzcash">
+                            <i class="ri-smartphone-line"></i>
+                            <span>JazzCash</span>
+                        </div>
+                        <div class="payment-option" data-method="easypaisa">
+                            <i class="ri-wallet-line"></i>
+                            <span>EasyPaisa</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Special Requests -->
+                    <div class="form__group">
+                        <label>Special Requests (Optional)</label>
+                        <textarea id="notes" rows="3" placeholder="Any special requests? e.g., baby seat, GPS, etc."></textarea>
+                    </div>
+                    
+                    <button type="submit" id="confirmBookingBtn" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem;">
+                        <i class="ri-check-line"></i> Confirm Booking
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Right Side - Booking Summary -->
+            <div class="dashboard__content">
+                <h3><i class="ri-file-list-line"></i> Booking Summary</h3>
+                <div id="summaryDetails">
+                    <p class="text-gray" style="padding: 1rem; text-align: center;">Please select pickup and return dates</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Invoice Modal -->
+    <div id="invoiceModal" class="modal">
+        <div class="modal__content" style="max-width: 600px;">
+            <div class="modal__header">
+                <h3><i class="ri-checkbox-circle-line" style="color: var(--success);"></i> Booking Confirmed!</h3>
+                <button class="modal__close" onclick="closeInvoice()">&times;</button>
+            </div>
+            <div id="invoiceContent"></div>
+            <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                <button onclick="downloadInvoice()" class="btn btn-primary" style="flex: 1;">
+                    <i class="ri-download-line"></i> Download PDF
+                </button>
+                <button onclick="closeInvoice()" class="btn btn-secondary" style="flex: 1;">
+                    <i class="ri-dashboard-line"></i> Go to Dashboard
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script src="auth.js"></script>
+    <script src="booking.js"></script>
+    <script src="notifications.js"></script>
+</body>
+</html>
