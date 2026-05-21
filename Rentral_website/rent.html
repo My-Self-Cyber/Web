@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <title>RentalX | Rent a Car</title>
+  </head>
+
+  <body>
+ 
+<!-- ========== NAVBAR ========== -->
+<header>
+  <nav>
+    <div class="nav__header">
+      <div class="nav__logo">
+        <a href="index.html">RentalX</a>
+      </div>
+      <div class="nav__menu__btn" id="menu-btn">
+        <i class="ri-menu-line"></i>
+      </div>
+    </div>
+
+    <ul class="nav__links" id="nav-links">
+      <li><a href="index.html#home">Home</a></li>
+      <li><a href="rent.html" class="active">Rent</a></li>
+      <li><a href="cars.html">Cars</a></li>
+      <li><a href="index.html#ride">Ride</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+      
+      <!-- User Status - YEH PART NAVBAR KE ANDAR HI RAKHO -->
+      <li class="nav__user" id="nav-user">
+        <span id="user-greeting"></span>
+        <button class="btn btn__secondary" id="logout-btn">Logout</button>
+      </li>
+    </ul>
+
+    <!-- YEH NAV__BTNS WALA PART BAHAR HAI -->
+    <div class="nav__btns" id="auth-buttons">
+      <a href="signup.html" class="btn btn__primary">Sign Up</a>
+      <a href="signin.html" class="btn btn__secondary">Sign In</a>
+    </div>
+  </nav>
+</header>
+
+    <!-- ========== RENT FORM ========== -->
+    <section class="section__container" id="rent-form">
+      <h2 class="section__header">Rent Your Car</h2>
+      <p class="section__subheader">
+        Choose your pickup and drop-off locations, dates, and get the best deals.
+      </p>
+
+      <form class="rent__form">
+        <div class="form__group">
+          <label for="pickup-location">Pickup Location</label>
+          <select id="pickup-location">
+            <option>Select Pickup Location</option>
+            <option>Karachi</option>
+            <option>Lahore</option>
+            <option>Islamabad</option>
+            <option>Multan</option>
+            <option>Quetta</option>
+          </select>
+        </div>
+
+        <div class="form__group">
+          <label for="drop-location">Drop-off Location</label>
+          <select id="drop-location">
+            <option>Select Drop-off Location</option>
+            <option>Karachi</option>
+            <option>Lahore</option>
+            <option>Islamabad</option>
+            <option>Multan</option>
+            <option>Quetta</option>
+          </select>
+        </div>
+
+        <div class="form__group">
+          <label for="pickup-date">Pickup Date & Time</label>
+          <input type="datetime-local" id="pickup-date" />
+        </div>
+
+        <div class="form__group">
+          <label for="return-date">Return Date & Time</label>
+          <input type="datetime-local" id="return-date" />
+        </div>
+
+        <div class="form__group">
+          <label for="price-range">Price Range (₹5,000 - ₹100,000)</label>
+          <input type="range" id="price-range" min="5000" max="100000" step="5000" />
+        </div>
+
+        <div class="form__group">
+          <label for="availability">Car Type</label>
+          <select id="availability">
+            <option>All</option>
+            <option>SUV</option>
+            <option>Sedan</option>
+            <option>Hatchback</option>
+            <option>Luxury</option>
+          </select>
+        </div>
+
+        <button type="button" class="btn">Check Availability</button>
+      </form>
+    </section>
+
+    <!-- ========== CARS AVAILABLE ========== -->
+    <section class="section__container">
+      <h2 class="section__header">Available Cars</h2>
+      <div class="cars__grid">
+        <div class="car__card">
+          <img src="assets/corolla.jpg" alt="Car" />
+          <h4>Toyota Corolla</h4>
+          <p>₹8,000 / day | Sedan</p>
+          <button class="btn">Rent Now</button>
+        </div>
+
+        <div class="car__card">
+          <img src="assets/civic.jpg" alt="Car" />
+          <h4>Honda Civic</h4>
+          <p>₹10,000 / day | Sedan</p>
+          <button class="btn">Rent Now</button>
+        </div>
+
+        <div class="car__card">
+          <img src="assets/hyundai.jpg" alt="Car" />
+          <h4>Hyundai Tucson</h4>
+          <p>₹15,000 / day | SUV</p>
+          <button class="btn">Rent Now</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== RENT CONFIRMATION FORM ========== -->
+    <section class="section__container">
+      <h2 class="section__header">Confirm Your Rent</h2>
+      <form class="booking__form">
+        <input type="text" placeholder="Full Name" required />
+        <input type="email" placeholder="Email Address" required />
+        <input type="tel" placeholder="Phone Number" required />
+        <input type="date" placeholder="Pickup Date" required />
+        <input type="date" placeholder="Return Date" required />
+        <button type="submit" class="btn">Confirm Rent</button>
+      </form>
+    </section>
+
+    <!-- ========== PAYMENT SECTION ========== -->
+    <section class="section__container">
+      <h2 class="section__header">Payment Information</h2>
+      <div class="payment__info">
+        <div class="payment__note">
+          <i class="ri-information-line"></i>
+          <h3>Payment will be done when you receive the car</h3>
+          <p>No online payment required. You will pay at the pickup location when you collect your rented car.</p>
+        </div>
+        
+        <div class="payment__steps">
+          <h4>Simple Payment Process:</h4>
+          <ul>
+            <li>1. Book your car online</li>
+            <li>2. Visit the pickup location</li>
+            <li>3. Inspect and receive the car</li>
+            <li>4. Pay securely at the counter</li>
+            <li>5. Enjoy your ride!</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== SUPPORT SECTION ========== -->
+    <section class="section__container">
+      <h2 class="section__header">Need Help?</h2>
+      <p class="section__subheader">
+        Contact our support team 24/7 for assistance or queries about your rent.
+      </p>
+      <button class="btn btn__primary">Chat with Support</button>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer>
+      <div class="section__container footer__bar">
+        <h4>RentalX</h4>
+        <p>Copyright © 2025 RentalX. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="auth.js"></script>
+    <script src="main.js"></script>
+
+  </body>
+</html>

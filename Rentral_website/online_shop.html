@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>AqibShop — Modern Green eCommerce SPA (FA23-BSE-147)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+  /* ---------------------------
+     Global / Theme variables
+     --------------------------- */
+  :root{
+    --accent: #16a34a;        /* green */
+    --accent-600: #15803d;
+    --accent-400: #4ade80;
+    --muted: #6b7280;
+    --bg: #f8faf8;
+    --card: #ffffff;
+    --glass: rgba(255,255,255,0.6);
+    --shadow: 0 10px 30px rgba(2,6,23,0.08);
+    --radius-lg: 14px;
+  }
+  html,body{ height:100%; }
+  body{
+    margin:0; font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial; background:var(--bg); color:#0f172a;
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  }
+  a { text-decoration:none; color:inherit; }
+
+  /* ---------------------------
+     Utilities
+     --------------------------- */
+  .muted{ color:var(--muted); }
+  .container-xl { max-width:1200px; }
+  .glass { background: linear-gradient(180deg, rgba(255,255,255,0.75), rgba(255,255,255,0.65)); border-radius:var(--radius-lg); box-shadow:var(--shadow); border:1px solid rgba(2,6,23,0.03); }
+
+  /* ---------------------------
+     NAVBAR
+     --------------------------- */
+  .site-nav { background: #ffffff; border-bottom:1px solid rgba(2,6,23,0.04); position:sticky; top:0; z-index:1200; }
+  .brand { color:var(--accent-600); font-weight:800; letter-spacing:0.2px; font-size:1.15rem; }
+  .nav-btn { border-radius:10px; }
+
+  /* search */
+  .search-input { width:380px; }
+  @media (max-width:900px){ .search-input { width:160px; } }
+
+  /* ---------------------------
+     HERO
+     --------------------------- */
+  .hero {
+    padding:48px 0; display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(180deg, #e8f7ea 0%, #f8faf8 100%);
+  }
+  .hero-card {
+    max-width:1100px; width:100%; display:grid; grid-template-columns:1fr 520px; gap:28px; align-items:center;
+  }
+  .hero-left { padding:28px; }
+  .hero-title { font-size:2.4rem; line-height:1.02; font-weight:800; margin-bottom:10px; }
+  .hero-sub { color:var(--muted); margin-bottom:18px; }
+  .hero-figure { border-radius:12px; overflow:hidden; box-shadow:var(--shadow); }
+
+  @media (max-width:992px){
+    .hero-card { grid-template-columns: 1fr; padding:18px; }
+    .search-input { width:100%; }
+  }
+
+  /* ---------------------------
+     PRODUCT GRID & CARDS
+     --------------------------- */
+  .catalog-controls { display:flex; gap:12px; justify-content:space-between; align-items:center; margin-bottom:18px; }
+  .product-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+  @media (max-width:1100px) { .product-grid { grid-template-columns:repeat(3,1fr); } }
+  @media (max-width:800px) { .product-grid { grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:480px) { .product-grid { grid-template-columns:repeat(1,1fr); } }
+
+  .card-product {
+    background:var(--card); border-radius:12px; padding:12px; border:1px solid rgba(2,6,23,0.03); transition:transform .28s, box-shadow .28s; overflow:hidden;
+  }
+  .card-product:hover { transform:translateY(-8px); box-shadow:0 22px 42px rgba(2,6,23,0.08); }
+  .card-product .imgwrap { border-radius:8px; overflow:hidden; height:200px; display:block; }
+  .card-product img{ width:100%; height:100%; object-fit:cover; transition:transform .4s; }
+  .card-product:hover img{ transform:scale(1.06); }
+  .product-meta { display:flex; justify-content:space-between; align-items:center; margin-top:10px; }
+  .price { font-weight:800; color:#06381f; }
+
+  .btn-primary-ghost { background:transparent; border:1px solid rgba(2,6,23,0.06); color:var(--muted); border-radius:10px; padding:6px 10px; }
+  .btn-accent { background:linear-gradient(90deg,var(--accent),var(--accent-400)); color:white; border-radius:10px; padding:8px 12px; border:none; }
+
+  /* Quick badges */
+  .badge-sale { background: linear-gradient(90deg,#f97316,#f43f5e); color:white; font-weight:700; border-radius:8px; padding:4px 8px; font-size:0.75rem; }
+
+  /* ---------------------------
+     QUICK VIEW / MODALS
+     --------------------------- */
+  .qv-img { width:100%; height:320px; object-fit:cover; border-radius:8px; }
+  .muted small { color:var(--muted); }
+
+  /* ---------------------------
+     CART DRAWER
+     --------------------------- */
+  .cart-drawer {
+    position:fixed; right:0; top:0; height:100vh; width:420px; transform:translateX(120%); transition:transform .36s ease; z-index:1400;
+    background:var(--card); box-shadow:-20px 0 60px rgba(2,6,23,0.08); display:flex; flex-direction:column;
+  }
+  .cart-drawer.open { transform:translateX(0); }
+  .cart-head { padding:18px; border-bottom:1px solid rgba(2,6,23,0.04); display:flex; justify-content:space-between; align-items:center; }
+  .cart-body { padding:14px; overflow:auto; flex:1; }
+  .cart-footer { padding:16px; border-top:1px solid rgba(2,6,23,0.04); }
+
+  .cart-item { display:flex; gap:12px; margin-bottom:12px; align-items:center; }
+  .cart-item img { width:72px; height:60px; border-radius:8px; object-fit:cover; }
+
+  /* ---------------------------
+     FORMS, TABLES, ADMIN
+     --------------------------- */
+  .admin-card { border-radius:12px; padding:14px; background:var(--card); box-shadow:var(--shadow); border:1px solid rgba(2,6,23,0.04); }
+
+  /* ---------------------------
+     FOOTER
+     --------------------------- */
+  footer { padding:34px 0; text-align:center; color:var(--muted); }
+
+  /* ---------------------------
+     SKELETON LOADER
+     --------------------------- */
+  .skeleton { background: linear-gradient(90deg,#f2f4f2,#eceff0,#f2f4f2); background-size:200% 100%; animation: shimmer 1.2s linear infinite; border-radius:8px; }
+  @keyframes shimmer { to { background-position:-200% 0; } }
+
+  /* small screens */
+  @media (max-width:420px){ .cart-drawer{ width:100%; } }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <header class="site-nav shadow-sm">
+    <div class="container-xl d-flex align-items-center justify-content-between py-3">
+      <div class="d-flex align-items-center gap-3">
+        <a href="#" class="brand">AqibShop</a>
+        <nav class="d-none d-lg-flex gap-2">
+          <a class="nav-link muted" href="#" data-link="home">Home</a>
+          <a class="nav-link muted" href="#" data-link="catalog">Catalog</a>
+          <a class="nav-link muted" href="#" data-link="admin">Admin</a>
+        </nav>
+      </div>
+
+      <div class="d-flex align-items-center gap-3">
+        <div class="input-group search-input d-none d-md-flex">
+          <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+          <input id="globalSearch" class="form-control border-start-0" placeholder="Search products, categories..." />
+        </div>
+
+        <button id="btnCartToggle" class="btn btn-sm btn-outline-secondary nav-btn position-relative">
+          <i class="bi bi-cart3"></i>
+          <span id="cartCountBadge" class="badge bg-success ms-2" style="display:none">0</span>
+        </button>
+
+        <button id="btnSignIn" class="btn btn-sm btn-outline-primary nav-btn">Sign in</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="container-xl my-5">
+    <!-- HERO -->
+    <section id="homeSection" class="hero">
+      <div class="hero-card glass">
+        <div class="hero-left">
+          <div class="muted small mb-2">NEW COLLECTION</div>
+          <h1 class="hero-title">Modern Essentials for Everyday Life</h1>
+          <p class="hero-sub">Curated selection of daily-use products. Fast, secure and modern frontend prototype — built for demos and projects.</p>
+          <div class="d-flex gap-3">
+            <button id="ctaShop" class="btn-accent">Shop Now</button>
+            <button id="ctaExplore" class="btn btn-primary-ghost">Explore</button>
+          </div>
+
+          <div class="mt-4 d-flex gap-3">
+            <div class="p-3 d-flex gap-3 align-items-center" style="background:linear-gradient(90deg, rgba(22,163,74,0.06), rgba(34,197,94,0.03)); border-radius:10px;">
+              <div style="width:48px;height:48px;border-radius:8px;background:linear-gradient(90deg,var(--accent-400),var(--accent)); display:flex;align-items:center;justify-content:center;color:white;">
+                <i class="bi bi-shield-check"></i>
+              </div>
+              <div>
+                <div style="font-weight:700">Secure Payments</div>
+                <div class="muted small">Safe & encrypted (demo)</div>
+              </div>
+            </div>
+
+            <div class="p-3 d-flex gap-3 align-items-center" style="border-radius:10px;background:#fff;border:1px solid rgba(2,6,23,0.03);">
+              <div style="width:48px;height:48px;border-radius:8px;background:linear-gradient(90deg,#d1fae5,#bbf7d0); display:flex;align-items:center;justify-content:center;color:var(--accent-600);">
+                <i class="bi bi-truck"></i>
+              </div>
+              <div>
+                <div style="font-weight:700">Fast Shipping</div>
+                <div class="muted small">Across major cities</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-figure">
+          <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?q=80&w=1400&auto=format&fit=crop" alt="hero">
+        </div>
+      </div>
+    </section>
+
+    <!-- CATALOG -->
+    <section id="catalogSection" style="margin-top:30px;">
+      <div class="d-flex catalog-controls align-items-center">
+        <div>
+          <h4 class="mb-0">Products</h4>
+          <div class="muted small">Browse our curated collection</div>
+        </div>
+
+        <div class="d-flex gap-2 align-items-center">
+          <select id="categoryFilter" class="form-select form-select-sm" style="width:160px;">
+            <option value="">All categories</option>
+          </select>
+
+          <div class="input-group" style="width:320px;">
+            <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+            <input id="catalogSearch" class="form-control" placeholder="Search by name or category" />
+          </div>
+
+          <div class="ms-2">
+            <button id="sortBtn" class="btn btn-outline-secondary btn-sm">Sort</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="productGrid" class="product-grid mt-3"></div>
+
+      <div id="catalogSkeleton" style="display:none" class="mt-3">
+        <div class="skeleton" style="height:160px;border-radius:12px"></div>
+      </div>
+    </section>
+
+    <!-- ADMIN (hidden by default; link in nav opens it) -->
+    <section id="adminSection" style="margin-top:36px; display:none;">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>Admin Dashboard (UI)</h4>
+        <div>
+          <button id="btnAddSample" class="btn btn-outline-success btn-sm">Add Sample Product</button>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <div class="row">
+          <div class="col-md-4">
+            <div style="font-weight:800; font-size:1.25rem">Overview</div>
+            <div class="muted small">Summary of store metrics</div>
+            <div class="mt-3">
+              <div class="d-flex justify-content-between"><div class="muted">Users</div><div id="adminUsers">0</div></div>
+              <div class="d-flex justify-content-between"><div class="muted">Orders</div><div id="adminOrders">0</div></div>
+              <div class="d-flex justify-content-between"><div class="muted">Revenue</div><div id="adminRevenue">$0</div></div>
+            </div>
+          </div>
+
+          <div class="col-md-8">
+            <div style="font-weight:700">Product List</div>
+            <table class="table mt-3">
+              <thead><tr><th>Image</th><th>Title</th><th>Category</th><th>Price</th><th>Stock</th><th></th></tr></thead>
+              <tbody id="adminTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- CART DRAWER -->
+  <aside id="cartDrawer" class="cart-drawer" aria-hidden="true">
+    <div class="cart-head">
+      <div style="font-weight:800">Your Cart</div>
+      <div><button id="closeCartBtn" class="btn btn-sm btn-outline-secondary"><i class="bi bi-x-lg"></i></button></div>
+    </div>
+
+    <div id="cartBody" class="cart-body"></div>
+
+    <div class="cart-footer">
+      <div class="d-flex justify-content-between"><div class="muted">Subtotal</div><div id="cartSubtotal">$0.00</div></div>
+      <div class="d-flex justify-content-between"><div class="muted">Tax (5%)</div><div id="cartTax">$0.00</div></div>
+      <hr/>
+      <div class="d-flex justify-content-between align-items-center mb-3"><div style="font-weight:800">Total</div><div id="cartTotal" style="font-weight:800">$0.00</div></div>
+      <div class="d-grid">
+        <button id="checkoutBtn" class="btn btn-accent">Checkout</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- QUICK VIEW MODAL -->
+  <div class="modal fade" id="quickViewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <img id="qvImage" class="qv-img" src="" alt="product" />
+            </div>
+            <div class="col-md-6">
+              <h4 id="qvTitle"></h4>
+              <div id="qvCat" class="muted small"></div>
+              <div id="qvPrice" class="price h4 mt-2"></div>
+              <p id="qvDesc" class="muted small mt-3">Product description placeholder — high quality product details will go here.</p>
+
+              <div class="d-flex gap-2 align-items-center mt-3">
+                <input id="qvQty" type="number" min="1" value="1" class="form-control" style="width:100px" />
+                <button id="qvAddBtn" class="btn btn-accent">Add to cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAYMENT MODAL -->
+  <div class="modal fade" id="paymentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <form id="paymentForm" class="p-3">
+          <div class="modal-header"><h5 class="modal-title">Payment</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+          <div class="modal-body">
+            <div id="paymentAlert" style="display:none" class="alert"></div>
+
+            <div class="mb-2">
+              <input id="payName" type="text" class="form-control" placeholder="Cardholder name" required />
+            </div>
+            <div class="mb-2">
+              <input id="payCard" type="text" class="form-control" placeholder="Card number (16 digits)" maxlength="19" required />
+            </div>
+            <div class="row g-2">
+              <div class="col-6"><input id="payExp" class="form-control" placeholder="MM/YY" required /></div>
+              <div class="col-6"><input id="payCVC" class="form-control" maxlength="3" placeholder="CVC" required /></div>
+            </div>
+            <div class="mt-3">
+              <small class="muted">This is a frontend mock — no real payment is processed.</small>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-accent">Pay Now</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIGN IN / SIGN UP MODAL -->
+  <div class="modal fade" id="authModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header"><h5 id="authTitle" class="modal-title">Sign In</h5><button class="btn-close" data-bs-dismiss="modal"></button></div>
+        <div class="modal-body">
+          <form id="authForm">
+            <div id="authAlert" style="display:none" class="alert"></div>
+            <div id="authFields">
+              <input id="authName" type="text" class="form-control mb-2" placeholder="Full name (for signup)" style="display:none" />
+              <input id="authEmail" type="email" class="form-control mb-2" placeholder="Email" required />
+              <input id="authPass" type="password" class="form-control mb-2" placeholder="Password" required />
+            </div>
+            <div class="d-flex gap-2">
+              <button id="authSubmit" class="btn btn-accent">Sign In</button>
+              <button id="toggleAuth" type="button" class="btn btn-outline-secondary">Switch to Sign Up</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS TOAST -->
+  <div class="position-fixed bottom-0 end-0 p-3" style="z-index:2000">
+    <div id="toastEl" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">Action completed</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    Project: Online Shopping System — Muhammad Aqib • Reg No: <strong>FA23-BSE-147</strong>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+  /*************************************************************************
+   * Advanced Single-file SPA JS
+   * Features:
+   * - products stored in localStorage (seeded)
+   * - product grid, filtering, searching
+   * - quick view modal, add-to-cart (with flying animation)
+   * - cart drawer (localStorage-backed)
+   * - checkout + payment validation (16-digit, CVC 3-digit, expiry MM/YY)
+   * - auth modal (signin/signup) stored to localStorage (demo)
+   * - admin UI (product list + delete)
+   *************************************************************************/
+
+  // Storage keys
+  const KEY_PRODUCTS = 'aqb_products_v1';
+  const KEY_CART = 'aqb_cart_v1';
+  const KEY_USERS = 'aqb_users_v1';
+  const KEY_ORDERS = 'aqb_orders_v1';
+
+  // Sample products (green-themed modern images from unsplash)
+  const SAMPLE_PRODUCTS = [
+    { id: 1, title: "Minimal Sneakers", category: "Shoes", price: 69.99, stock: 12, image: "https://images.unsplash.com/photo-1519741490550-3d1e0f4b6b08?q=80&w=1400&auto=format&fit=crop" },
+    { id: 2, title: "Classic Watch", category: "Accessories", price: 129.00, stock: 5, image: "https://images.unsplash.com/photo-1518544800571-5ec9b9b6f7b2?q=80&w=1400&auto=format&fit=crop" },
+    { id: 3, title: "Wireless Headset", category: "Electronics", price: 99.50, stock: 8, image: "https://images.unsplash.com/photo-1518444020265-4a3f0a5c1a6e?q=80&w=1400&auto=format&fit=crop" },
+    { id: 4, title: "Denim Jacket", category: "Clothing", price: 89.99, stock: 10, image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1400&auto=format&fit=crop" },
+    { id: 5, title: "Aviator Sunglasses", category: "Accessories", price: 45.00, stock: 20, image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1400&auto=format&fit=crop" },
+    { id: 6, title: "Travel Backpack", category: "Bags", price: 59.99, stock: 15, image: "https://images.unsplash.com/photo-1520975919997-46f9e6b8f7e6?q=80&w=1400&auto=format&fit=crop" },
+    { id: 7, title: "Smart Lamp", category: "Home", price: 39.99, stock: 6, image: "https://images.unsplash.com/photo-1493666438817-866a91353ca9?q=80&w=1400&auto=format&fit=crop" },
+    { id: 8, title: "Leather Belt", category: "Accessories", price: 29.99, stock: 18, image: "https://images.unsplash.com/photo-1585386959984-a4155223a7f3?q=80&w=1400&auto=format&fit=crop" }
+  ];
+
+  // Helper: localStorage wrappers
+  function load(key, fallback){
+    try{ const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch(e){ return fallback; }
+  }
+  function save(key, value){ localStorage.setItem(key, JSON.stringify(value)); }
+
+  // Initialize data
+  if(!localStorage.getItem(KEY_PRODUCTS)) save(KEY_PRODUCTS, SAMPLE_PRODUCTS);
+  if(!localStorage.getItem(KEY_USERS)) save(KEY_USERS, []);
+  if(!localStorage.getItem(KEY_ORDERS)) save(KEY_ORDERS, []);
+  let products = load(KEY_PRODUCTS, SAMPLE_PRODUCTS);
+  let cart = load(KEY_CART, []);
+  let users = load(KEY_USERS, []);
+  let orders = load(KEY_ORDERS, []);
+
+  // DOM refs
+  const productGrid = document.getElementById('productGrid');
+  const categoryFilter = document.getElementById('categoryFilter');
+  const catalogSearch = document.getElementById('catalogSearch');
+  const globalSearch = document.getElementById('globalSearch');
+  const cartDrawer = document.getElementById('cartDrawer');
+  const cartBody = document.getElementById('cartBody');
+  const cartSubtotal = document.getElementById('cartSubtotal');
+  const cartTax = document.getElementById('cartTax');
+  const cartTotal = document.getElementById('cartTotal');
+  const cartCountBadge = document.getElementById('cartCountBadge');
+
+  // Modal instances
+  const quickViewModal = new bootstrap.Modal(document.getElementById('quickViewModal'));
+  const paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+  const authModal = new bootstrap.Modal(document.getElementById('authModal'));
+  const toastEl = document.getElementById('toastEl'); const toast = new bootstrap.Toast(toastEl);
+
+  // Utility functions
+  function formatPrice(v){ return '$' + Number(v).toFixed(2); }
+  function uniqueCategories(list){ return Array.from(new Set(list.map(p=>p.category))).sort(); }
+
+  // RENDER: categories dropdown
+  function renderCategories(){
+    const cats = uniqueCategories(products);
+    categoryFilter.innerHTML = '<option value="">All categories</option>';
+    cats.forEach(c => { const opt = document.createElement('option'); opt.value = c; opt.textContent = c; categoryFilter.appendChild(opt); });
+  }
+
+  // RENDER: product grid
+  function renderProducts(filterText = '', filterCat = ''){
+    productGrid.innerHTML = '';
+    const q = (filterText || '').toLowerCase().trim();
+    const list = products.filter(p => {
+      if(filterCat && p.category !== filterCat) return false;
+      if(!q) return true;
+      return p.title.toLowerCase().includes(q) || p.category.toLowerCase().includes(q);
+    });
+
+    if(list.length === 0){
+      productGrid.innerHTML = '<div class="p-4 glass">No products found.</div>'; return;
+    }
+
+    list.forEach(p => {
+      const div = document.createElement('div'); div.className = 'card-product';
+      div.innerHTML = `
+        <div class="card-product glass" style="height:100%;">
+          <div class="imgwrap"><img src="${p.image}" alt="${escapeHtml(p.title)}" loading="lazy"></div>
+          <div style="padding:10px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <div style="font-weight:700">${escapeHtml(p.title)}</div>
+              <div class="badge-sale" style="display:${p.onSale ? 'inline-block':'none'}">SALE</div>
+            </div>
+            <div class="muted small">${escapeHtml(p.category)}</div>
+            <div class="product-meta">
+              <div class="price">${formatPrice(p.price)}</div>
+              <div style="display:flex;gap:8px;">
+                <button class="btn btn-primary-ghost btn-sm quickview" data-id="${p.id}"><i class="bi bi-eye"></i></button>
+                <button class="btn btn-accent btn-sm addcart" data-id="${p.id}"><i class="bi bi-cart-plus"></i> Add</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      const wrapper = document.createElement('div'); wrapper.className = 'col'; wrapper.appendChild(div);
+      // we want to keep responsive columns via grid container: append directly to productGrid styled as CSS grid
+      const cell = document.createElement('div'); cell.className = ''; cell.appendChild(div);
+      productGrid.appendChild(div);
+    });
+
+    // Attach event listeners
+    document.querySelectorAll('.quickview').forEach(b => b.addEventListener('click', (e)=> openQuickView(Number(b.dataset.id))));
+    document.querySelectorAll('.addcart').forEach(b => b.addEventListener('click', (e)=> addToCartAnimated(Number(b.dataset.id), b)));
+  }
+
+  // Open quick view modal
+  function openQuickView(id){
+    const p = products.find(x=>x.id===id); if(!p) return;
+    document.getElementById('qvImage').src = p.image;
+    document.getElementById('qvTitle').textContent = p.title;
+    document.getElementById('qvCat').textContent = p.category;
+    document.getElementById('qvPrice').textContent = formatPrice(p.price);
+    document.getElementById('qvDesc').textContent = p.description || 'High-quality product. Replace with real description.';
+    document.getElementById('qvQty').value = 1;
+    document.getElementById('qvAddBtn').onclick = () => { addToCartAnimated(id, document.getElementById('qvAddBtn')); quickViewModal.hide(); };
+    quickViewModal.show();
+  }
+
+  // Escape helper for safety in innerHTML (small utility)
+  function escapeHtml(str){ return (''+str).replace(/[&<>"']/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]; }); }
+
+  // CART logic
+  function loadCart(){ cart = load(KEY_CART, []); return cart; }
+  function saveCartState(){ save(KEY_CART, cart); updateCartUI(); }
+
+  function addToCart(id, qty = 1){
+    const idx = cart.findIndex(c => c.id === id);
+    if(idx >= 0) cart[idx].qty += qty;
+    else cart.push({ id, qty });
+    saveCartState();
+    showToast('Added to cart', true);
+  }
+
+  function removeFromCart(id){
+    cart = cart.filter(c => c.id !== id); saveCartState();
+  }
+
+  function updateCartQty(id, qty){
+    const it = cart.find(c=>c.id===id); if(!it) return;
+    it.qty = Math.max(1, qty); saveCartState();
+  }
+
+  // Render cart drawer
+  function updateCartUI(){
+    cart = load(KEY_CART, cart);
+    // build details with product info
+    const details = cart.map(ci => {
+      const prod = products.find(p=>p.id===ci.id);
+      return prod ? { ...prod, qty: ci.qty, line: prod.price * ci.qty } : null;
+    }).filter(Boolean);
+
+    cartBody.innerHTML = '';
+    if(details.length === 0){
+      cartBody.innerHTML = '<div class="p-3 muted">Your cart is empty. Add products to continue.</div>';
+      setCartTotals(0);
+      cartCountBadge.style.display = 'none';
+      return;
+    }
+    details.forEach(d => {
+      const el = document.createElement('div'); el.className = 'cart-item';
+      el.innerHTML = `
+        <img src="${d.image}" alt="${escapeHtml(d.title)}" />
+        <div style="flex:1">
+          <div style="font-weight:700">${escapeHtml(d.title)}</div>
+          <div class="muted small">$${d.price.toFixed(2)}</div>
+          <div class="mt-2 d-flex gap-2 align-items-center">
+            <input type="number" min="1" value="${d.qty}" data-id="${d.id}" class="form-control" style="width:100px" />
+            <button class="btn btn-sm btn-outline-danger remBtn" data-id="${d.id}"><i class="bi bi-trash"></i></button>
+          </div>
+        </div>
+        <div style="min-width:80px; text-align:right; font-weight:700">${formatPrice(d.line)}</div>
+      `;
+      cartBody.appendChild(el);
+    });
+
+    // attach qty and remove events
+    cartBody.querySelectorAll('.remBtn').forEach(b => b.addEventListener('click', ()=> {
+      removeFromCart(Number(b.dataset.id));
+      updateCartUI();
+    }));
+    cartBody.querySelectorAll('input[type="number"]').forEach(inp => inp.addEventListener('change', ()=> {
+      updateCartQty(Number(inp.dataset.id), Number(inp.value)); updateCartUI();
+    }));
+
+    const subtotal = details.reduce((s,d)=> s + d.line, 0);
+    setCartTotals(subtotal);
+    const totalQty = details.reduce((s,d)=> s + d.qty, 0);
+    cartCountBadge.style.display = totalQty > 0 ? '' : 'none';
+    cartCountBadge.textContent = totalQty;
+  }
+
+  function setCartTotals(sub){
+    const tax = sub * 0.05;
+    const total = sub + tax;
+    cartSubtotal.textContent = formatPrice(sub);
+    cartTax.textContent = formatPrice(tax);
+    cartTotal.textContent = formatPrice(total);
+  }
+
+  // add-to-cart flying animation
+  function addToCartAnimated(id, triggerEl){
+    const p = products.find(x=>x.id===id); if(!p){ addToCart(id); return; }
+    let img = triggerEl.closest('.card-product')?.querySelector('img') || document.querySelector('img');
+    if(!img){ addToCart(id); return; }
+    const rect = img.getBoundingClientRect();
+    const fly = img.cloneNode(true);
+    fly.style.position='fixed';
+    fly.style.left = rect.left + 'px';
+    fly.style.top = rect.top + 'px';
+    fly.style.width = rect.width + 'px';
+    fly.style.height = rect.height + 'px';
+    fly.style.zIndex = 2500;
+    fly.style.borderRadius = '8px';
+    document.body.appendChild(fly);
+    const target = document.getElementById('btnCartToggle').getBoundingClientRect();
+    const tx = target.left + target.width/2 - rect.left;
+    const ty = target.top + target.height/2 - rect.top;
+    requestAnimationFrame(()=> {
+      fly.style.transform = `translate(${tx}px, ${ty}px) scale(.18) rotate(8deg)`;
+      fly.style.transition = 'transform .8s cubic-bezier(.2,.8,.2,1), opacity .8s';
+      fly.style.opacity = '0.6';
+    });
+    setTimeout(()=> { fly.remove(); addToCart(id); }, 800);
+  }
+
+  // Checkout flow: open payment modal or show alert
+  document.getElementById('checkoutBtn').addEventListener('click', ()=> {
+    if(load(KEY_CART, []).length === 0){ showToast('Cart is empty', false); return; }
+    document.getElementById('paymentAlert').style.display = 'none';
+    paymentModal.show();
+  });
+
+  // Payment validation
+  document.getElementById('paymentForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('payName').value.trim();
+    const card = document.getElementById('payCard').value.replace(/\s+/g,'');
+    const exp = document.getElementById('payExp').value.trim();
+    const cvc = document.getElementById('payCVC').value.trim();
+    const alertEl = document.getElementById('paymentAlert');
+
+    alertEl.style.display = 'none';
+    if(!name){ alertEl.className='alert alert-danger'; alertEl.textContent='Enter cardholder name.'; alertEl.style.display='block'; return; }
+    if(!/^\d{16}$/.test(card)){ alertEl.className='alert alert-danger'; alertEl.textContent='Card number must be exactly 16 digits.'; alertEl.style.display='block'; return; }
+    if(!/^\d{3}$/.test(cvc)){ alertEl.className='alert alert-danger'; alertEl.textContent='CVC must be exactly 3 digits.'; alertEl.style.display='block'; return; }
+    if(!/^\d{2}\/\d{2}$/.test(exp)){ alertEl.className='alert alert-danger'; alertEl.textContent='Expiry must be in MM/YY format.'; alertEl.style.display='block'; return; }
+    const [mmStr, yyStr] = exp.split('/');
+    const mm = parseInt(mmStr,10), yy = parseInt(yyStr,10);
+    if(mm < 1 || mm > 12){ alertEl.className='alert alert-danger'; alertEl.textContent='Invalid expiry month.'; alertEl.style.display='block'; return; }
+    const current = new Date(); const fullYear = 2000 + yy;
+    const expiryDate = new Date(fullYear, mm, 1);
+    if(expiryDate <= new Date(current.getFullYear(), current.getMonth(), 1)){ alertEl.className='alert alert-danger'; alertEl.textContent='Card expired.'; alertEl.style.display='block'; return; }
+
+    // Payment OK -> create order (mock)
+    const cartDetails = getCartDetails();
+    const subtotal = cartDetails.reduce((s,i)=>s + i.line, 0);
+    const tax = subtotal * 0.05; const total = subtotal + tax;
+    const order = {
+      id: 'ORD' + (Math.floor(Math.random()*900000)+100000),
+      items: cart,
+      subtotal, tax, total,
+      createdAt: new Date().toISOString()
+    };
+    orders.push(order); save(KEY_ORDERS, orders);
+    // clear cart
+    cart = []; save(KEY_CART, cart);
+    updateCartUI(); paymentModal.hide();
+    showToast('Payment successful — order placed', true);
+    // update admin metrics
+    renderAdmin();
+  });
+
+  function getCartDetails(){
+    cart = load(KEY_CART, cart);
+    return cart.map(ci=>{
+      const prod = products.find(p=>p.id === ci.id);
+      return prod ? {...prod, qty: ci.qty, line: prod.price * ci.qty } : null;
+    }).filter(Boolean);
+  }
+
+  // Auth (signin/signup)
+  let authMode = 'signin'; // or 'signup'
+  document.getElementById('btnSignIn').addEventListener('click', ()=> {
+    authMode = 'signin'; document.getElementById('authTitle').textContent = 'Sign In';
+    document.getElementById('authName').style.display = 'none';
+    document.getElementById('authSubmit').textContent = 'Sign In';
+    document.getElementById('authAlert').style.display = 'none';
+    authModal.show();
+  });
+  document.getElementById('toggleAuth').addEventListener('click', ()=> {
+    authMode = (authMode === 'signin') ? 'signup' : 'signin';
+    document.getElementById('authTitle').textContent = authMode==='signin' ? 'Sign In' : 'Sign Up';
+    document.getElementById('authName').style.display = authMode==='signin' ? 'none' : 'block';
+    document.getElementById('authSubmit').textContent = authMode==='signin' ? 'Sign In' : 'Sign Up';
+  });
+  document.getElementById('authForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('authName').value.trim();
+    const email = document.getElementById('authEmail').value.trim();
+    const pass = document.getElementById('authPass').value;
+    const alertEl = document.getElementById('authAlert'); alertEl.style.display='none';
+    if(authMode === 'signup'){
+      if(!name || !email || pass.length < 6){ alertEl.className='alert alert-danger'; alertEl.textContent='Please complete fields (password min 6).'; alertEl.style.display='block'; return; }
+      users.push({ name, email, reg: 'FA23-BSE-147' }); save(KEY_USERS, users);
+      showToast('Sign up successful', true); authModal.hide();
+      // redirect to catalog
+      document.querySelector('[data-link="catalog"]')?.click();
+    } else {
+      // simple mock signin check
+      if(!email || !pass){ alertEl.className='alert alert-danger'; alertEl.textContent='Enter credentials.'; alertEl.style.display='block'; return; }
+      showToast('Signed in (demo)', true); authModal.hide();
+    }
+  });
+
+  // Admin rendering
+  function renderAdmin(){
+    document.getElementById('adminUsers').textContent = (load(KEY_USERS, []).length || 0);
+    document.getElementById('adminOrders').textContent = (load(KEY_ORDERS, []).length || 0);
+    const rev = (load(KEY_ORDERS, []).reduce((s,o)=> s + (o.total||0), 0) || 0);
+    document.getElementById('adminRevenue').textContent = '$' + rev.toFixed(2);
+
+    const tbody = document.getElementById('adminTable'); tbody.innerHTML = '';
+    products.forEach(p => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td><img src="${p.image}" style="width:100px;height:60px;object-fit:cover;border-radius:6px" /></td>
+        <td>${escapeHtml(p.title)}</td>
+        <td>${escapeHtml(p.category)}</td>
+        <td>$${p.price.toFixed(2)}</td>
+        <td><span class="badge bg-success">${p.stock}</span></td>
+        <td><button class="btn btn-sm btn-outline-danger delProd" data-id="${p.id}">Delete</button></td>`;
+      tbody.appendChild(tr);
+    });
+    tbody.querySelectorAll('.delProd').forEach(b => b.addEventListener('click', ()=> {
+      const id = Number(b.dataset.id);
+      if(confirm('Delete product?')){ products = products.filter(p=>p.id!==id); save(KEY_PRODUCTS, products); renderProducts(catalogSearch.value, categoryFilter.value); renderAdmin(); }
+    }));
+  }
+
+  // ADD sample product
+  document.getElementById('btnAddSample').addEventListener('click', ()=> {
+    const id = Math.max(0, ...products.map(p=>p.id)) + 1;
+    const newP = { id, title: 'New Product '+id, category: 'Misc', price: Math.round((10+Math.random()*90)*100)/100, stock: Math.floor(Math.random()*20)+1, image: `https://picsum.photos/seed/p${id}/800/600` };
+    products.push(newP); save(KEY_PRODUCTS, products); renderProducts(catalogSearch.value, categoryFilter.value); renderAdmin(); showToast('Sample product added', true);
+  });
+
+  // Helpers: show/hide cart drawer
+  document.getElementById('btnCartToggle').addEventListener('click', ()=> {
+    cartDrawer.classList.toggle('open'); updateCartUI();
+  });
+  document.getElementById('closeCartBtn').addEventListener('click', ()=> cartDrawer.classList.remove('open'));
+
+  // Quick UI: global search and catalog search
+  globalSearch?.addEventListener('input', (e)=> {
+    renderProducts(e.target.value, categoryFilter.value);
+  });
+  catalogSearch.addEventListener('input', (e)=> renderProducts(e.target.value, categoryFilter.value));
+  categoryFilter.addEventListener('change', ()=> renderProducts(catalogSearch.value, categoryFilter.value));
+
+  // CTA buttons
+  document.getElementById('ctaShop').addEventListener('click', ()=> { document.getElementById('catalogSection').scrollIntoView({behavior:'smooth'}); });
+  document.getElementById('ctaExplore').addEventListener('click', ()=> { document.getElementById('catalogSection').scrollIntoView({behavior:'smooth'}); });
+
+  // Toggle admin nav link
+  document.querySelectorAll('[data-link]').forEach(a => a.addEventListener('click', (e)=> {
+    e.preventDefault();
+    const key = a.dataset.link;
+    if(key === 'admin'){ document.getElementById('adminSection').style.display = ''; document.getElementById('adminSection').scrollIntoView({behavior:'smooth'}); } 
+    else if(key === 'catalog'){ document.getElementById('catalogSection').scrollIntoView({behavior:'smooth'}); } 
+    else if(key === 'home'){ window.scrollTo({top:0, behavior:'smooth'}); }
+  }));
+
+  // Toast helper
+  function showToast(msg, success=true){
+    toastEl.querySelector('.toast-body').textContent = msg;
+    toastEl.className = 'toast align-items-center text-bg-' + (success ? 'success' : 'primary') + ' border-0';
+    toast.show();
+  }
+
+  // init render
+  (function init(){
+    products = load(KEY_PRODUCTS, SAMPLE_PRODUCTS);
+    cart = load(KEY_CART, []);
+    users = load(KEY_USERS, []);
+    orders = load(KEY_ORDERS, []);
+
+    renderCategories();
+    renderProducts();
+    updateCartUI();
+    renderAdmin();
+  })();
+
+  // small safety save: wrap save with KEY_PRODUCTS constant var
+  function saveProducts(productsArr){ save(KEY_PRODUCTS, productsArr); }
+
+  // small helper to load from storage externally
+  function load(key, fallback){ try{ const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch(e){ return fallback; } }
+  function save(key, value){ localStorage.setItem(key, JSON.stringify(value)); }
+
+  // expose a bit for debugging in console
+  window._aqib = { products, cart, users, orders, addToCart, removeFromCart, saveProducts };
+
+  </script>
+</body>
+</html>
